@@ -23,7 +23,7 @@ TO             {printf("TO (%s) ", yytext);}
 ;              {printf("SEMI_COLON (%s) ", yytext);}
 \"(\\.|[^"\\])*\"        {printf("STRING_LITERAL (%s) ", yytext);}
 \.             {printf("STATEMENT_TERMINATOR (%s)", yytext);}
-.              {printf("matched %s", yytext); return(0);}
+.              {printf("Encountered invalid syntax"); return(0);}
 %%
 
 int main() {
