@@ -20,6 +20,7 @@ TO             {printf("TO (%s) ", yytext);}
 ^X+            {printf("VARABLE_SIZE (%s) ", yytext);}
 [0-9]+         {printf("INTEGER (%s) ", yytext);}
 [A-Za-z][A-Za-z0-9\-]* {printf("IDENTIFIER (%s) ", yytext);}
+[0-9]+[A-Za-z0-9\-]* {printf("INVALID_IDENTIFIER (%s) ", yytext); return(0);} /* Catches invalid identifiers beginning with a number */
 ;              {printf("SEMI_COLON (%s) ", yytext);}
 \"(\\.|[^"\\])*\"        {printf("STRING_LITERAL (%s) ", yytext);}
 \.             {printf("STATEMENT_TERMINATOR (%s)", yytext);}
