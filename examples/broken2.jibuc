@@ -7,8 +7,8 @@ BODY.
 PRINT "Please enter a number?".
 INPUT Y.
 
-MOVE 15 TO ZY.
-ADD Y TO Z.
+MOVE 15 TO Y.
+ADD XYz TO Z.
 PRINT XY-1;"+";Y;"=";Z.
 
 END.

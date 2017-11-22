@@ -1,0 +1,14 @@
+BEGINING.
+XXX var1.
+XXXX var2.
+XXXX var3.
+
+BODY.
+PRINT "Please enter a number?".
+INPUT var2.
+
+MOVE 15 TO var3.
+ADD var2 TO var3.
+PRINT var1;"+";var2;"=";var3.
+
+END.

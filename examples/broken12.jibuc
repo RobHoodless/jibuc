@@ -5,10 +5,10 @@ XXXX Z.
 
 BODY.
 PRINT "Please enter a number?".
-INPUT Y.
+INPUT YYYYY.
 
-MOVE 15 TO ZY.
-ADD Y TO Z.
+MOVE 15 TO Y.
+ADD 15 TO Z.
 PRINT XY-1;"+";Y;"=";Z.
 
 END.
