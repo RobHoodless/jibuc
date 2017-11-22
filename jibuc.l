@@ -5,31 +5,34 @@
  * This section contains imports and variable declarations.
  */
 
+#include "y.tab.h"
+#include <string.h>
+
+char* temp;
 %}
 
+%option yylineno
+
+
 %%
-[\t ]+          /* ignore whitespace */;
-^BEGINING      {printf("BEGINING (%s) ", yytext);}
-^BODY          {printf("BODY (%s) ", yytext);}
-^END           {printf("END (%s) ", yytext);}
-^PRINT         {printf("PRINT (%s) ", yytext);}
-^INPUT         {printf("INPUT (%s) ", yytext);}
-^MOVE          {printf("MOVE (%s) ", yytext);}
-^ADD           {printf("ADD (%s) ", yytext);}
-TO             {printf("TO (%s) ", yytext);}
-^X+            {printf("VARABLE_SIZE (%s) ", yytext);}
-[0-9]+         {printf("INTEGER (%s) ", yytext);}
-[A-Za-z][A-Za-z0-9\-]* {printf("IDENTIFIER (%s) ", yytext);}
-[0-9]+[A-Za-z0-9\-]* {printf("INVALID_IDENTIFIER (%s) ", yytext); return(0);} /* Catches invalid identifiers beginning with a number */
-;              {printf("SEMI_COLON (%s) ", yytext);}
-\"(\\.|[^"\\])*\"        {printf("STRING_LITERAL (%s) ", yytext);}
-\.             {printf("STATEMENT_TERMINATOR (%s)", yytext);}
+[\t ]+              /* ignore whitespace */;
+(?i:BEGINING)       {return begining;}
+(?i:BODY)           {return body;}
+(?i:END)            {return end;}
+(?i:PRINT)          {return print;}
+(?i:INPUT)          {return input_keyword;}
+(?i:MOVE)           {return move;}
+(?i:ADD)            {return add;}
+(?i:TO)             {return to;}
+\n                  {}
+^X+            {yylval.size = strlen(yytext); return variable_size;}
+[0-9]+         {yylval.num = atoi(yytext); return integer;}
+[A-Za-z][A-Za-z0-9\-]* { temp = (char*) calloc(strlen(yytext)+1, sizeof(char)); strcpy(temp, yytext); yylval.name = temp; return identifier;}
+[0-9]+[A-Za-z0-9\-]* {printf("INVALID_IDENTIFIER (%s) at line %d ", yytext, yylineno); return(0);} /* Catches invalid identifiers beginning with a number */
+;              {return semi_colon;}
+\"(\\.|[^"\\])*\"        {return string_literal;}
+\.             {return statement_terminator;}
 .              {printf("Encountered invalid syntax"); return(0);}
 %%
 
-int main() {
-    yylex();
-    return(0);
-}
-
-int yywrap() {}
+int yywrap(void) {return 1;}
